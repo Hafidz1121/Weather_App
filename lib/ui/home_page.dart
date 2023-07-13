@@ -8,6 +8,7 @@ import 'package:intl/intl.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 import 'package:weather_app/components/weather_item.dart';
 import 'package:weather_app/constants.dart';
+import 'package:weather_app/ui/detail_page.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -176,7 +177,7 @@ class _HomePageState extends State<HomePage> {
                                           bottom: MediaQuery.of(context).viewInsets.bottom,
                                         ),
                                         child: Container(
-                                          height: size.height * 0.1,
+                                          height: size.height * 0.15,
                                           padding: const EdgeInsets.symmetric(
                                             horizontal: 20,
                                             vertical: 10,
@@ -236,7 +237,7 @@ class _HomePageState extends State<HomePage> {
                         ClipRRect(
                           borderRadius: BorderRadius.circular(10),
                           child: Image.asset(
-                            "assets/profile.png",
+                            "assets/user.png",
                             width: 40,
                             height: 40,
                           ),
@@ -333,7 +334,11 @@ class _HomePageState extends State<HomePage> {
                               fontWeight: FontWeight.bold, fontSize: 20.0),
                         ),
                         GestureDetector(
-                          onTap: () => print('Tapped'),
+                          onTap: () =>
+                              Navigator.push(context,
+                                  MaterialPageRoute(builder: (_)=> DetailPage(dailyForecastWeather: dailyWeatherForecast,),
+                                  ),
+                              ),
                           child: Text(
                             'Forecast',
                             style: TextStyle(
@@ -351,9 +356,9 @@ class _HomePageState extends State<HomePage> {
                     SizedBox(
                       height: 110,
                       child: ListView.builder(
+                        itemCount: hourlyWeatherForecast.length,
                         scrollDirection: Axis.horizontal,
                         physics: const BouncingScrollPhysics(),
-                        itemCount: hourlyWeatherForecast.length <= 24 ? hourlyWeatherForecast.length : 24,
                         itemBuilder: (BuildContext context, int index) {
                           // Truncate the list to a maximum of 24 items
                           final truncatedHourlyForecast = hourlyWeatherForecast.sublist(0, 24);
